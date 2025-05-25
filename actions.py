@@ -1,50 +1,69 @@
 import requests 
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
-from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
-
-
-# volume
-def aumentar_vol(value): def_vol(value if value >= 0 else 0.05, inc= value < 0)
-def diminuir_vol(value): def_vol(value if value >= 0 else -0.05, inc= value < 0)
-def definir_vol(value): def_vol(value)
-def mutar_vol(_): def_vol(0)
-
-
-vol_actions = {
-    "aumentar_volume": aumentar_vol,
-    "diminuir_volume": diminuir_vol,
-    "definir_volume": definir_vol,
-    "mutar": mutar_vol
-}
+import datetime
 
 
 def def_vol(value:float, inc:bool = False):
     devices = AudioUtilities.GetSpeakers()
     interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
     volume = interface.QueryInterface(IAudioEndpointVolume)
-    current_volume = volume.GetMasterVolumeLevelScalar()
+    current_vol = volume.GetMasterVolumeLevelScalar()
     
-    print(f"Current volume: {current_volume}")
     
-    # se value for menor q 0, -10
-    set_vol = (value / 100) if (value / 100) <= 1 else 1
-    if inc:
-        set_vol = current_volume + value  
-    if set_vol > 1:
-        set_vol = 1
-    elif set_vol < 0:
-        set_vol = 0
-        
-        
-    print("SET VOL: ", set_vol)
+    set_vol = current_vol + value if inc else value / 100
+    set_vol = max(0.0, min(set_vol, 1.0)) # Aceita valores entre 0 e 1
+    
     volume.SetMasterVolumeLevelScalar(set_vol, None)
+    
+    print(f"Volume anterior: {current_vol}")
+    get_vol()
+
+def get_vol():
+    devices = AudioUtilities.GetSpeakers()
+    interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+    volume = interface.QueryInterface(IAudioEndpointVolume)
+    current_vol = volume.GetMasterVolumeLevelScalar()
+    
+    print(f"Atualmente o volume esta em {(current_vol*100):.2f}%")
 
 
+def get_time():
+    full_datetime = datetime.datetime.now()
+    
+    hour = full_datetime.hour
+    minute = full_datetime.minute
+    second = full_datetime.second
+    microsecond = full_datetime.microsecond
+    
+    print(f"São {hour}:{minute}:{second}")
+    # print("HORAS: ", full_datetime)
+    
+def nlu_fallback(_): print("Comando irreconhecivel ou não exista")
+def aumentar_vol(value): def_vol(value if value >= 0 else 0.05, inc= value < 0)
+def diminuir_vol(value): def_vol(value if value >= 0 else -0.05, inc= value < 0)
+def definir_vol(value): def_vol(value)
+def max_vol(_): def_vol(100)
+def mutar_vol(_): def_vol(0)
+def get_time_now(_): get_time()
+def ac_get_vol(_): get_vol()
+
+
+vol_actions = {
+    "nlu_fallback": nlu_fallback,
+    "aumentar_volume": aumentar_vol,
+    "diminuir_volume": diminuir_vol,
+    "definir_volume": definir_vol,
+    "max_volume": max_vol,
+    "mutar": mutar_vol,
+    "time_now": get_time_now,
+    "get_vol": ac_get_vol
+}
 
 
 while True:
     message:str = str(input(">>>"))
+    
     answer = {
         "text": message
     }
@@ -60,9 +79,9 @@ while True:
     action:str  = data["intent"]["name"]
     value:float = float(data["entities"][0]["value"]) if len(data["entities"]) else -1
     
-    print(data)
-    print("ação: ", action) # nome intent
-    print("valor: ", value) # nome entities
+    # print(data)
+    print("Ação: ", action) # nome intent
+    print("Valor: ", value) # nome entities
     
     handler = vol_actions[action]
     
@@ -70,50 +89,10 @@ while True:
         handler(value)
     else:
         print("Ação não reconhecida")
-    
-    # match action:
-    #     case "aumentar_volume":
-    #         def_vol(value, value <= 0)
-    #     case"diminuir_volume":
-    #         def_vol(value, value <= 0)
-    #     case "definir_volume":
-    #         def_vol(value, value <= 0)
-    #     case "mutar":
-    #         def_vol(0)
-    
-    # if action == "aumentar_volume":
-    #     if value >= 0:
-    #         def_vol(value)
-    #     else:
-    #         def_vol(0.05, True)
-    # elif action == "diminuir_volume":
-    #     if value >= 0:
-    #         def_vol(value)
-    #     else:
-    #         def_vol(-0.05, True)
-    # elif action == "definir_volume":
-    #     def_vol(value)
-    # elif action == "mutar":
-    #     def_vol(0)
-    
-    
-    """ 
-        nlu_fallback
-        se der fallback, mandar ele realizar a pergunta novamente
-        aumenta o 
-        
-        
-        aumenta o volume pra -12
-    """
-    
-    
-    # intent name
-    # entities value
 
 
 
     """ 
-    
     {
         'text': 'almenta o som em 30', 
         'intent': {
@@ -148,19 +127,19 @@ while True:
                     'name': 'mutar', 
                     'confidence': 1.4307222961917887e-08
                 }
-            ], 
-            'response_selector': {
-                'all_retrieval_intents': [], 
-                'default': {
-                    'response': {
-                        'responses': None, 
-                        'confidence': 0.0, 
-                        'intent_response_key': None, 
-                        'utter_action': 'utter_None'
-                    }, 
-                    'ranking': []
-                    }
+        ], 
+        'response_selector': {
+            'all_retrieval_intents': [], 
+            'default': {
+                'response': {
+                    'responses': None, 
+                    'confidence': 0.0, 
+                    'intent_response_key': None, 
+                    'utter_action': 'utter_None'
+                }, 
+                'ranking': []
                 }
             }
+    }
     """
 

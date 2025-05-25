@@ -3,27 +3,26 @@ assistant_id: 20250524-135501-jet-harbor
 language: pt
 
 pipeline:
-  - name: WhitespaceTokenizer
+  - name: WhitespaceTokenizer # SpacyTokenizer 
   - name: RegexFeaturizer
   - name: LexicalSyntacticFeaturizer
   - name: CountVectorsFeaturizer
-  - name: CountVectorsFeaturizer
     analyzer: char_wb
-    min_ngram: 1
-    max_ngram: 4
+    min_ngram: 3 #1
+    max_ngram: 5 #4
   - name: DIETClassifier
     constrain_similarities: true
-    epochs: 100
+    epochs: 100 # 150-200 se dados forem escassos
   - name: EntitySynonymMapper
-  - name: ResponseSelector
+  - name: ResponseSelector # para response
     epochs: 100
   - name: FallbackClassifier
-    threshold: 0.7
-    ambiguity_threshold: 0.1
+    threshold: 0.6
+    ambiguity_threshold: 0.2
 
 policies:
   - name: RulePolicy
   - name: MemoizationPolicy
   - name: TEDPolicy
-    max_history: 5
+    max_history: 5 # almentar se houver fluxos mais olongos
     epochs: 100

@@ -3,8 +3,11 @@ version: "3.1"
 intents:
   - aumentar_volume
   - diminuir_volume
-  - mutar
   - definir_volume
+  - max_volume
+  - mutar
+  - get_vol
+  - time_now
 
 entities:
   - value
@@ -20,20 +23,36 @@ responses:
         action: "diminuir_volume"
         value: "{value}"
 
-  utter_mutar:
-    - custom:
-        action: "mutar"
-
   utter_definir_volume:
     - custom:
         action: "definir_volume"
         value: "{value}"  # Opcional, pode sobrescrever via ação
+  
+  utter_max_volume:
+    - custom:
+        action: "max_volume"
+
+  utter_mutar:
+    - custom:
+        action: "mutar"
+  
+  utter_get_vol:
+    - custom:
+        action: "get_vol"
+  
+  utter_time_now:
+    - custom:
+        action: "time_now"
+
 
 actions:
   - utter_aumentar_volume
   - utter_diminuir_volume
-  - utter_mutar
   - utter_definir_volume
+  - utter_max_volume
+  - utter_mutar
+  - utter_get_vol
+  - utter_time_now
 
 slots:
   value:

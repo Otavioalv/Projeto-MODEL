@@ -11,12 +11,30 @@ rules:
     - intent: diminuir_volume
     - action: utter_diminuir_volume
 
+- rule: Definir volume
+  steps:
+    - intent: definir_volume
+    - action: utter_definir_volume
+
+- rule: Volume no maximo
+  steps: 
+    - intent: max_volume
+    - action: utter_max_volume
+
 - rule: Mutar
   steps:
     - intent: mutar
     - action: utter_mutar
 
-- rule: Definir volume
+- rule: Mostrar a quantidade de volume atuel
+  steps: 
+    - intent: get_vol
+    - action: utter_get_vol
+
+- rule: Mostrar hora atual
   steps:
-    - intent: definir_volume
-    - action: utter_definir_volume
+    - intent: time_now
+    - action: utter_time_now
+
+  
+

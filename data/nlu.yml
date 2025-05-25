@@ -3,38 +3,220 @@ nlu:
 - intent: aumentar_volume
   examples: |
     - aumenta o volume
-    - aumenar o volume em [39](value)
-    - sobe o som
-    - coloca mais som
-    - aumenta em [10](value)
+    - aumenta o som mano
+    - aumenta em [10](value) por favor
+    - aumenta isso daí em [46](value) mano
+    - aumenta mais [25](value) por favor
+    - aumenta em [30](value) por favor
+    - aumenta uns [50](value) por favor
+    - aumenta pra [80](value)
+    - aumenta pra caramba
+    - aumenta pra caramba isso ai 
+    - aumenta que não tô ouvindo
+    - aumenta que não tô ouvindo isso ai
+    - aumenta que não tô ouvindo por favor
+    - sobe o volume mano
+    - sobe em [15](value) mano
+    - sobe isso aí em [30](value)
+    - sobe [40](value) no volume por favor
+    - sobe [40](value) de volume por favor
+    - sobe o som em uns [23](value)% por favor
+    - sobe o volume aí rapidinho
+    - sobe pra [100](value) por favor
+    - pode aumentar mais
     - pode subir o volume [20](value)%
-    - aumenta em [30](value)
+    - pode colocar mais uns [60](value)
+    - coloca mais [20](value)% de volume por favor
+    - coloca volume no [70](value)
+    - quero mais som por favor mano
+    - quero mais som ai man
+    - tá muito baixo, aumenta por favor
+    - tá muito baixo, aumenta isso ai
+    - mete mais som aí mano
+    - mete mais som nisso ai mano
+    - manda ver no volume 
+    - dá um gás no volume por favor
 
 - intent: diminuir_volume
   examples: |
-    - abaixa o volume
-    - diminui o som
-    - diminui o som para [84](value)%
-    - tira um pouco do som
-    - baixa em [15](value)
-    - diminui [20](value)%
-
-- intent: mutar 
-  examples: |
-    - coloca no mudo
-    - silencia o som
-    - mute
-    - desliga o áudio
-    - mutar audio
-    - mudo
+    - abaixa o volume por favor
+    - abaixa isso aí mano por favor
+    - abaixa um pouco o som  
+    - abaixa pra [10](value)%  
+    - coloca o volume mais baixo
+    - coloca o menos volume
+    - diminui o som pra menos agora
+    - diminui [20](value)%  mano
+    - diminui aí rapidinho 
+    - diminui em [40](value)  
+    - diminui isso  
+    - diminui mais  
+    - tira um pouco do som  
+    - tira uns [25](value)  
+    - tira esse som  
+    - baixa em [15](value) mano
+    - baixa esse barulho mano
+    - baixa esse barulho aí por favor 
+    - baixa pra [20](value)  
+    - corta um pouco do volume  
+    - corta [10](value) do volume por vafor
+    - corta o som um pouco
+    - reduz o volume em [30](value) por favor
+    - reduz pra [5](value) o volume  
+    - reduz o som  
+    - tá muito alto, abaixa isso aí
+    - tá muito alto, abaixa o som
+    - pode abaixar um pouco por favor 
+    - pode abaixar mais
+    - pode abaixar o volume [20](value)%
+    - pode colocar menos uns [60](value)
+    - menos volume mano
+    - quero menos som 
+    - desce o volume  
+    - volume tá alto demais, baixa  
+    - bota o som mais baixo
+    - põe o volume mais baixo
+    - ajusta o som pra menos
 
 - intent: definir_volume 
   examples: |
-    - deixa o volume em [50](value)
-    - coloca o som em [20](value)%
-    - define volume [70](value)
-    - põe o volume em [30](value)
+    - deixa o volume em [50](value) por favor
     - deixa o volume em [70](value)%
-    - coloca o volume ai
-    - tira o volume ai
-    - põe o volume em [80](value)%
+    - deixa em [45](value) de volume
+    - define volume [70](value) man
+    - define o som em [100](value)%
+    - define volume como [25](value)% agora
+    - põe o volume em [30](value) por favor
+    - põe o volume por cerca de [80](value)% agora
+    - configura o volume para [40](value)
+    - configura som para [65](value)
+    - quero o volume em [10](value) mano
+    - quero som em [15](value)
+    - volume ajustado para [90](value)
+    - volume em [95](value) por favor
+    - coloca o som em [20](value)% agora
+    - ajusta o volume para [60](value) por favor
+    - altera o volume para [35](value)
+    - muda o volume para [55](value)%
+    - fixa o volume em [75](value)
+    - som em [5](value), está alto
+
+- intent: max_volume
+  examples: |
+    - bota no máximo bixo
+    - bota o volume no topo 
+    - bota o áudio no limite  
+    - volume no talo mano
+    - volume máximo 
+    - volume total  
+    - coloca o áudio no máximo por favor
+    - coloca  o áudio no talo o volume agora
+    - coloca o volume no talo o volume  
+    - deixa o volume no máximo  
+    - deixa o som estourando  
+    - quero o som no máximo agora por favor
+    - quero tudo de som  
+    - quero o som no máximo agora
+    - som no último agora
+    - som estourando 
+    - sobe tudo por favor  
+    - pode botar tudo no talo bixo
+    - aumenta tudo o volume aí
+    - joga o volume lá em cima 
+    - manda tudo no som  
+    - põe tudo de som  
+    - solta o som no máximo  
+
+- intent: get_vol
+  examples: |
+    - quanto tá o volume?
+    - me diz a quantidade de volume atual
+    - quão alto o volume tá?
+    - quão alto o volume está?
+    - qual é o volume atual?
+    - volume tá em quanto agora?
+    - tá em que volume?
+    - que nível de volume tá?
+    - como tá o volume agora?
+    - volume tá em qual valor?
+    - qual o valor do volume atual?
+    - qual o volume configurado?
+    - me informa o volume por favor
+    - volume atual, por favor
+    - pode me falar quanto tá o volume?
+    - que número tá o volume?
+    - qual o nível de som atual?
+    - me fala o nível do volume
+    - volume tá em quantos por cento?
+    - tá em quantos % o volume?
+    - qual a porcentagem do volume?
+
+- intent: mutar 
+  examples: |
+    - coloca no mudo  
+    - coloca o volume no mudo
+    - coloca o volume no minimo
+    - coloca o volume no silencioso
+    - silencia o som por favor
+    - muta mano
+    - muta
+    - muta aí  
+    - muta o volume  
+    - silenciar audio
+    - silenciar volume
+    - desliga o áudio agora
+    - desliga o som  
+    - deixa o som no minimo
+    - deixa o som no minimo
+    - dá mute no volume 
+    - mutar audio agora
+    - mudo 
+    - tira o som mano
+    - sem som 
+    - desativa o volume disso
+    - cala o som
+    - pode mutar  
+    - som desligado  
+    - põe no silencioso
+    - põe no minimo
+    - põe esse volume no mudo
+    - põe o som no mudo
+    - silêncio total
+    - quero silêncio  
+    - corta o som
+    - para o áudio  
+    - man deixa no minimo ta muito alto
+
+- intent: time_now
+  examples: |
+    - que horas são?
+    - pode me falar as horas por favor?
+    - que hora é agora?
+    - qual é a hora?
+    - me diz a hora agora
+    - tem como ver as horas mano?
+    - você sabe que horas são?
+    - que horas são aí?
+    - por favor, que horas são?
+    - hora atual, por favor
+    - me mostra as horas agora
+    - hora do sistema
+    - quero saber a hora
+    - informa a hora atual
+    - tem como me dizer as horas?
+    - diz que horas são agora
+    - fala a hora pra mim
+    - hora, por favor
+    - me diz que horas são
+    - fala que hora é
+    - que horas tá marcando?
+    - hora certa, por favor
+    - me fala a hora aí
+    - que hora marca aí?
+    - manda as horas
+    - preciso saber que horas são
+    - que horas são nesse momento?
+    - qual é a hora exata?
+    - me diz a hora certa
+    - vê aí que horas são por favor
+
