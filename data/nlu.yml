@@ -1,0 +1,40 @@
+version: "3.1"
+nlu:
+- intent: aumentar_volume
+  examples: |
+    - aumenta o volume
+    - aumenar o volume em [39](value)
+    - sobe o som
+    - coloca mais som
+    - aumenta em [10](value)
+    - pode subir o volume [20](value)%
+    - aumenta em [30](value)
+
+- intent: diminuir_volume
+  examples: |
+    - abaixa o volume
+    - diminui o som
+    - diminui o som para [84](value)%
+    - tira um pouco do som
+    - baixa em [15](value)
+    - diminui [20](value)%
+
+- intent: mutar 
+  examples: |
+    - coloca no mudo
+    - silencia o som
+    - mute
+    - desliga o áudio
+    - mutar audio
+    - mudo
+
+- intent: definir_volume 
+  examples: |
+    - deixa o volume em [50](value)
+    - coloca o som em [20](value)%
+    - define volume [70](value)
+    - põe o volume em [30](value)
+    - deixa o volume em [70](value)%
+    - coloca o volume ai
+    - tira o volume ai
+    - põe o volume em [80](value)%

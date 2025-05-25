@@ -1,0 +1,22 @@
+version: "3.1"
+
+rules:
+- rule: Aumentar volume
+  steps:
+    - intent: aumentar_volume
+    - action: utter_aumentar_volume
+
+- rule: Diminuir volume
+  steps:
+    - intent: diminuir_volume
+    - action: utter_diminuir_volume
+
+- rule: Mutar
+  steps:
+    - intent: mutar
+    - action: utter_mutar
+
+- rule: Definir volume
+  steps:
+    - intent: definir_volume
+    - action: utter_definir_volume

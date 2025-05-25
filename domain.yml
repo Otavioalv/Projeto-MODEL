@@ -1,0 +1,49 @@
+version: "3.1"
+
+intents:
+  - aumentar_volume
+  - diminuir_volume
+  - mutar
+  - definir_volume
+
+entities:
+  - value
+
+responses:
+  utter_aumentar_volume:
+    - custom:
+        action: "aumentar_volume"
+        value: "{value}"
+
+  utter_diminuir_volume:
+    - custom:
+        action: "diminuir_volume"
+        value: "{value}"
+
+  utter_mutar:
+    - custom:
+        action: "mutar"
+
+  utter_definir_volume:
+    - custom:
+        action: "definir_volume"
+        value: "{value}"  # Opcional, pode sobrescrever via ação
+
+actions:
+  - utter_aumentar_volume
+  - utter_diminuir_volume
+  - utter_mutar
+  - utter_definir_volume
+
+slots:
+  value:
+    type: any
+    mappings:
+      - type: from_entity
+        entity: value
+
+
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

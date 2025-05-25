@@ -1,0 +1,20 @@
+# Ambiente virtual
+venv/
+.env/
+
+# rasa
+.rasa
+
+# Python
+__pycache__/
+*.py[cod]
+actions
+
+# Logs
+*.log
+
+# Pasta dos modelos treinados
+models/
+
+# VSCode
+.vscode/
