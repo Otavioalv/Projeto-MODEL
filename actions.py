@@ -4,8 +4,22 @@ from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
 
 
-# Criar "biblioteca" para essas funcionalidades especificas
-def def_vol(value:float):
+# volume
+def aumentar_vol(value): def_vol(value if value >= 0 else 0.05, inc= value < 0)
+def diminuir_vol(value): def_vol(value if value >= 0 else -0.05, inc= value < 0)
+def definir_vol(value): def_vol(value)
+def mutar_vol(_): def_vol(0)
+
+
+vol_actions = {
+    "aumentar_volume": aumentar_vol,
+    "diminuir_volume": diminuir_vol,
+    "definir_volume": definir_vol,
+    "mutar": mutar_vol
+}
+
+
+def def_vol(value:float, inc:bool = False):
     devices = AudioUtilities.GetSpeakers()
     interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
     volume = interface.QueryInterface(IAudioEndpointVolume)
@@ -13,8 +27,17 @@ def def_vol(value:float):
     
     print(f"Current volume: {current_volume}")
     
+    # se value for menor q 0, -10
     set_vol = (value / 100) if (value / 100) <= 1 else 1
-    
+    if inc:
+        set_vol = current_volume + value  
+    if set_vol > 1:
+        set_vol = 1
+    elif set_vol < 0:
+        set_vol = 0
+        
+        
+    print("SET VOL: ", set_vol)
     volume.SetMasterVolumeLevelScalar(set_vol, None)
 
 
@@ -35,23 +58,52 @@ while True:
 
     
     action:str  = data["intent"]["name"]
-    value:float = float(data["entities"][0]["value"]) if len(data["entities"]) else 5.0
+    value:float = float(data["entities"][0]["value"]) if len(data["entities"]) else -1
     
     print(data)
     print("ação: ", action) # nome intent
     print("valor: ", value) # nome entities
     
-    match action:
-        case "aumentar_volume" | "definir_volume" | "diminuir_volume":
-            def_vol(value)
-        case "mutar":
-            def_vol(0)
+    handler = vol_actions[action]
     
+    if handler: 
+        handler(value)
+    else:
+        print("Ação não reconhecida")
+    
+    # match action:
+    #     case "aumentar_volume":
+    #         def_vol(value, value <= 0)
+    #     case"diminuir_volume":
+    #         def_vol(value, value <= 0)
+    #     case "definir_volume":
+    #         def_vol(value, value <= 0)
+    #     case "mutar":
+    #         def_vol(0)
+    
+    # if action == "aumentar_volume":
+    #     if value >= 0:
+    #         def_vol(value)
+    #     else:
+    #         def_vol(0.05, True)
+    # elif action == "diminuir_volume":
+    #     if value >= 0:
+    #         def_vol(value)
+    #     else:
+    #         def_vol(-0.05, True)
+    # elif action == "definir_volume":
+    #     def_vol(value)
+    # elif action == "mutar":
+    #     def_vol(0)
     
     
     """ 
         nlu_fallback
         se der fallback, mandar ele realizar a pergunta novamente
+        aumenta o 
+        
+        
+        aumenta o volume pra -12
     """
     
     
