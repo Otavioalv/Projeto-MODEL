@@ -220,3 +220,44 @@ nlu:
     - me diz a hora certa
     - vê aí que horas são por favor
 
+- intent: get_weather
+  examples: |
+    - mostra o tempo em [Iranduba](city_name)
+    - como está o tempo em [Manaus](city_name)?
+    - me diga a previsão em [São Paulo](city_name)
+    - previsão do tempo para [Iranduba](city_name)
+
+- lookup: city_name
+  examples: |
+    - Manaus
+    - Iranduba
+    - Manacapuru
+    - São Paulo
+    - Rio Branco	
+    - Maceió	
+    - Macapá	
+    - Salvador	
+    - Fortaleza	
+    - Brasília
+    - Vitória
+    - Goiânia
+    - São Luís	
+    - Cuiabá
+    - Campo Grande
+    - Belo Horizonte
+    - Belém	
+    - João Pessoa	
+    - Curitiba	
+    - Recife	
+    - Teresina	
+    - Rio de Janeiro
+    - Natal
+    - Porto Alegre
+    - Porto Velho	
+    - Boa Vista	
+    - Florianópolis
+    - São Paulo
+    - Aracaju	
+    - Palmas
+    - Nova york
+    - Australia

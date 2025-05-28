@@ -8,9 +8,11 @@ intents:
   - mutar
   - get_vol
   - time_now
+  - get_weather
 
 entities:
   - value
+  - city_name
 
 responses:
   utter_aumentar_volume:
@@ -44,6 +46,11 @@ responses:
     - custom:
         action: "time_now"
 
+  utter_get_weather:
+    - custom:
+        action: "get_weather"
+        value: "{city_name}"
+
 
 actions:
   - utter_aumentar_volume
@@ -53,6 +60,7 @@ actions:
   - utter_mutar
   - utter_get_vol
   - utter_time_now
+  - utter_get_weather
 
 slots:
   value:
@@ -60,6 +68,11 @@ slots:
     mappings:
       - type: from_entity
         entity: value
+  city_name: 
+    type: text
+    mappings: 
+      - type: from_entity
+        entity: city_name
 
 
 

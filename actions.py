@@ -4,13 +4,13 @@ from comtypes import CLSCTX_ALL
 import datetime
 
 
-def def_vol(value:float, inc:bool = False):
+def def_vol(value, inc:bool = False):
     devices = AudioUtilities.GetSpeakers()
     interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
     volume = interface.QueryInterface(IAudioEndpointVolume)
     current_vol = volume.GetMasterVolumeLevelScalar()
     
-    
+    value = float(value)
     set_vol = current_vol + value if inc else value / 100
     set_vol = max(0.0, min(set_vol, 1.0)) # Aceita valores entre 0 e 1
     
@@ -38,9 +38,7 @@ def get_time():
     print(f"São {hour}:{minute}:{second}")
     # print("HORAS: ", full_datetime)
     
-def get_weather():
-    print("tempo")
-    
+# Precisão Razoavel
 def open_weather(city: str) -> dict:
     weather_response = dict()
     api_key = "17160d89448d96a62bbb0b1223f48bea"
@@ -92,13 +90,13 @@ def open_weather(city: str) -> dict:
         print(f"Erro ao buscar o clima: {response.status_code} - {response.text}")
         
     
-    print(weather_response)
+    # print(weather_response)
     return weather_response
 
-
-def tommorow_weather() -> dict:
+# Precisão Alta
+def tommorow_weather(city: str) -> dict:
     weather_response = dict()
-    result_op_w = open_weather("Iranduba")
+    result_op_w = open_weather(city)
     
     lat = result_op_w["cord"]["lat"]
     lon = result_op_w["cord"]["lon"]
@@ -118,6 +116,7 @@ def tommorow_weather() -> dict:
             "weather": {
                 "temp": data["data"]["values"]["temperature"], 
                 "feels_like": data["data"]["values"]["temperatureApparent"],
+                "precipitation_probability": data["data"]["values"]["precipitationProbability"]
             }, 
             "cord": {
                 "lat": data["location"]["lat"],
@@ -166,23 +165,39 @@ def tommorow_weather() -> dict:
     }
     """
     
-    print(weather_response)
+    # print(weather_response)
+    
     return weather_response
 
-
-tommorow_weather()
-
-
+# alta precisão tw
+# razoavel precisão ow
+# duas precisão
+def get_weather(city, api="all"):
+    match api:
+        case "ow":
+            return {
+                "open_weather": open_weather(city)
+            }
+        case "tw":
+            return {
+                "tommorow_weather": tommorow_weather(city)
+            }
+        case "all":
+            return {
+                "open_weather": open_weather(city),
+                "tommorow_weather": tommorow_weather(city)
+            }
     
 
 def nlu_fallback(_): print("Comando irreconhecivel ou não exista")
-def aumentar_vol(value): def_vol(value if value >= 0 else 0.05, inc= value < 0)
-def diminuir_vol(value): def_vol(value if value >= 0 else -0.05, inc= value < 0)
+def aumentar_vol(value): def_vol(value if value != None else 0.05, inc= not value)
+def diminuir_vol(value): def_vol(value if value != None else -0.05, inc= not value)
 def definir_vol(value): def_vol(value)
 def max_vol(_): def_vol(100)
 def mutar_vol(_): def_vol(0)
 def get_time_now(_): get_time()
 def ac_get_vol(_): get_vol()
+def ac_get_weather(value): get_weather(value)
 
 
 vol_actions = {
@@ -193,12 +208,9 @@ vol_actions = {
     "max_volume": max_vol,
     "mutar": mutar_vol,
     "time_now": get_time_now,
-    "get_vol": ac_get_vol
+    "get_vol": ac_get_vol,
+    "get_weather": None #ac_get_weather
 }
-
-
-
-
 
 
 def start():
@@ -217,8 +229,9 @@ def start():
         data = response.json();
 
         
+        print(data)
         action:str  = data["intent"]["name"]
-        value:float = float(data["entities"][0]["value"]) if len(data["entities"]) else -1
+        value = data["entities"][0]["value"] if len(data["entities"]) else None
         
         # print(data)
         print("Ação: ", action) # nome intent
@@ -234,55 +247,15 @@ def start():
 
 # start()
 
+# def get_city_names():
+#     url = "https://raw.githubusercontent.com/felipefdl/cidades-estados-brasil-json/master/Cidades.json"
+#     response = requests.get(url)
+#     # cidades = [cidade["nome"] for cidade in response.json()]
+    
+#     for c in response.json():
+#         print(c)
 
-""" 
-    {
-        'text': 'almenta o som em 30', 
-        'intent': {
-            'name': 'aumentar_volume', 
-            'confidence': 0.9999929666519165
-        }, 
-        'entities': [
-            {
-                'entity': 'value', 
-                'start': 17, 
-                'end': 19, 
-                'confidence_entity': 0.9999445676803589, 
-                'value': '30', 
-                'extractor': 'DIETClassifier', 
-                'processors': [ 'EntitySynonymMapper']
-            }
-        ], 
-        'text_tokens': [[0, 7], [8, 9], [10, 13], [14, 16], [17, 19]], 
-        'intent_ranking': [
-            {
-                'name': 'aumentar_volume', 
-                'confidence': 0.9999929666519165}, 
-                {
-                    'name': 'definir_volume', 
-                    'confidence': 6.442897756642196e-06
-                }, 
-                {
-                    'name': 'diminuir_volume', 
-                    'confidence': 5.449787749967072e-07
-                }, 
-                {
-                    'name': 'mutar', 
-                    'confidence': 1.4307222961917887e-08
-                }
-        ], 
-        'response_selector': {
-            'all_retrieval_intents': [], 
-            'default': {
-                'response': {
-                    'responses': None, 
-                    'confidence': 0.0, 
-                    'intent_response_key': None, 
-                    'utter_action': 'utter_None'
-                }, 
-                'ranking': []
-                }
-            }
-    }
-    """
+# get_city_names()
+
+
 

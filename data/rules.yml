@@ -36,5 +36,10 @@ rules:
     - intent: time_now
     - action: utter_time_now
 
+- rule: Mostra previsão do tempo
+  steps: 
+    - intent: get_weather
+    - action: utter_get_weather
+
   
 
