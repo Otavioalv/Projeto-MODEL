@@ -3,7 +3,6 @@ from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 from comtypes import CLSCTX_ALL
 import datetime
 
-
 def def_vol(value, inc:bool = False):
     devices = AudioUtilities.GetSpeakers()
     interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
@@ -172,7 +171,7 @@ def tommorow_weather(city: str) -> dict:
 # alta precisão tw
 # razoavel precisão ow
 # duas precisão
-def get_weather(city, api="all"):
+def get_weather(city, api="all") -> dict[str, dict] | None:
     match api:
         case "ow":
             return {
