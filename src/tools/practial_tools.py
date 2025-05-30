@@ -1,9 +1,24 @@
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 from comtypes import CLSCTX_ALL
+from requests import RequestException
 
 import datetime
 import requests
 
+""" 
+try:
+	print(a/b)
+
+except ZeroDivisionError as error:
+	print(error)
+
+else:
+	print( ' Sem erros')
+
+finally:
+	print('Aqui sempre vai printar')
+
+"""
 
 class Practical_tools:
     """ 
@@ -16,37 +31,47 @@ class Practical_tools:
     
     def __init__(self):
         self.__pc_volume = AudioUtilities.GetSpeakers().Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None).QueryInterface(IAudioEndpointVolume)
-        self._pc_current_vol = self.__pc_volume.GetMasterVolumeLevelScalar()
+        self._pc_current_vol:float = self.__pc_volume.GetMasterVolumeLevelScalar()
+        self.__k_open_weather:str = "17160d89448d96a62bbb0b1223f48bea"
+        self.__k_tommorow_weather:str = "3Wp0bmAHHVNp7Pu6jUNr4woQAQ2nutFD"
+
     
-    def pc_def_vol(self, value, inc: bool = False):
+    def pc_def_vol(self, value:float, inc:bool = False):
         """ 
             Define volume do Windows
         
             
             Args:
-                assunto (str): Assunto do e-mail.
-                corpo (str): Corpo do e-mail.
-
+                value: Quantidade numerica para definir o volume
+                inc: Se vai incrementar com o volume atual, ou definir volume exatamente com value
+            
             Returns:
                 bool: True
         """
         
-        value = float(value)
-        set_vol = self._pc_current_vol + value if inc else value / 100
+        value = value/100
+        
+        set_vol = self._pc_current_vol + value if inc else value
         set_vol = max(0.0, min(set_vol, 1.0)) # Aceita valores entre 0 e 1
         
         
         print(f"Volume anterior: {self._pc_current_vol}")
-        self.__pc_volume.SetMasterVolumeLevelScalar(set_vol, None)
-        print(f"Volume atual: {self._pc_current_vol}")
         
-        self.pc_get_vol()
+        try: 
+            self.__pc_volume.SetMasterVolumeLevelScalar(set_vol, None)
+            self._pc_current_vol = set_vol
+            
+            print(f"Volume atual: {self._pc_current_vol}")
+            
+            self.pc_get_vol()
+        except Exception as e:
+            print(f"Erro ao aumentar o volume do computador: {e}")
         
     def pc_get_vol(self):        
         """ 
             Retorna o atributo pc_get_vol Windows
         """    
-        # print(f"Atualmente o volume esta em {(current_vol*100):.2f}%")
+        
         return self._pc_current_vol
       
     def pc_get_time_now(self):  
@@ -63,7 +88,6 @@ class Practical_tools:
         
         print(f"São {hour}:{minute}:{second}")
         
-    
     def api_open_weather(self, city: str):
         """ 
             API que mostra a previsão do tempo, com precisão razoavel porem confiavel
@@ -72,7 +96,6 @@ class Practical_tools:
         """
         
         weather_response = dict()
-        api_key = "17160d89448d96a62bbb0b1223f48bea"
         
         # iranduba,am,br
         city = city.lower()
@@ -91,15 +114,15 @@ class Practical_tools:
         
         params = {
             "q": city,
-            "appid": api_key,
+            "appid": self.__k_open_weather,
             "lang": "pt_br",
             "units": "metric"
         }
         
-        response = requests.get(url, params)
-        
-        
-        if response.status_code == 200:
+        try:
+            response = requests.get(url, params)
+            response.raise_for_status()
+            
             data = response.json()
             
             weather_response = {
@@ -115,13 +138,18 @@ class Practical_tools:
                 "city_name": data["name"],
             }
             
-            # print(weather_response["weather_des"], weather_response["temp"], weather_response["city_name"], weather_response["feels_like"], weather_response["lat"], weather_response["lon"])
-            # print(data)
-        else:
-            print(f"Erro ao buscar o clima: {response.status_code} - {response.text}")
+        except RequestException as e:
+            print(f"Erro {e}")
+            return {}
+        
+        
+        # if response.status_code == 200:
+        # else:
+        #     print(f"Erro ao buscar o clima: {response.status_code} - {response.text}")
             
         
         # print(weather_response)
+        
         return weather_response
             
     def api_tommorow_weather(self, city: str):
@@ -137,16 +165,13 @@ class Practical_tools:
         lat = result_op_w["cord"]["lat"]
         lon = result_op_w["cord"]["lon"]
         
-        api_key = "3Wp0bmAHHVNp7Pu6jUNr4woQAQ2nutFD"
+        url = f"https://api.tomorrow.io/v4/weather/realtime?location={lat},{lon}&apikey={self.__k_tommorow_weather}"
         
         
-        url = f"https://api.tomorrow.io/v4/weather/realtime?location={lat},{lon}&apikey={api_key}"
-        
-        response = requests.get(url)
-        
-        # print(response.json())
-        
-        if response.status_code == 200:
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            
             data = response.json()
             weather_response = {
                 "weather": {
@@ -158,9 +183,17 @@ class Practical_tools:
                     "lat": data["location"]["lat"],
                     "lon": data["location"]["lon"],   
                 }
-            }
-        else:
-            print(f"Erro ao buscar o clima: {response.status_code} - {response.text}")
+            } 
+        except RequestException as e:
+            print(f"Error: {e}")
+            return {}
+        
+        
+        # print(response.json())
+        
+        # if response.status_code == 200:
+        # else:
+        #     print(f"Erro ao buscar o clima: {response.status_code} - {response.text}")
         
         # https://api.tomorrow.io/v4/weather/realtime?location={lat},{lon}&apikey={API_KEY}
         # https://api.tomorrow.io/v4/weather/forecast?location=-3.2847,-60.1861&apikey=3Wp0bmAHHVNp7Pu6jUNr4woQAQ2nutFD&timesteps=1h

@@ -17,30 +17,30 @@ entities:
 responses:
   utter_aumentar_volume:
     - custom:
-        action: "aumentar_volume"
+        action: "pc_aumentar_volume"
         value: "{value}"
 
   utter_diminuir_volume:
     - custom:
-        action: "diminuir_volume"
+        action: "pc_diminuir_volume"
         value: "{value}"
 
   utter_definir_volume:
     - custom:
-        action: "definir_volume"
+        action: "pc_definir_volume"
         value: "{value}"  # Opcional, pode sobrescrever via ação
   
   utter_max_volume:
     - custom:
-        action: "max_volume"
+        action: "pc_max_volume"
 
   utter_mutar:
     - custom:
-        action: "mutar"
+        action: "pc_mutar"
   
   utter_get_vol:
     - custom:
-        action: "get_vol"
+        action: "pc_get_vol"
   
   utter_time_now:
     - custom:
@@ -48,7 +48,7 @@ responses:
 
   utter_get_weather:
     - custom:
-        action: "get_weather"
+        action: "api_get_weather"
         value: "{city_name}"
 
 

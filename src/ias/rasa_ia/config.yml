@@ -3,7 +3,10 @@ assistant_id: 20250524-135501-jet-harbor
 language: pt
 
 pipeline:
-  - name: WhitespaceTokenizer # SpacyTokenizer 
+  - name: SpacyNLP
+    model: pt_core_news_md 
+  - name: SpacyTokenizer
+  - name: SpacyFeaturizer
   - name: RegexFeaturizer
   - name: LexicalSyntacticFeaturizer
   - name: CountVectorsFeaturizer
