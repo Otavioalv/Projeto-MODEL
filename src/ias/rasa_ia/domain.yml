@@ -1,12 +1,12 @@
 version: "3.1"
 
 intents:
-  - aumentar_volume
-  - diminuir_volume
-  - definir_volume
-  - max_volume
-  - mutar
-  - get_vol
+  - pc_aumentar_volume
+  - pc_diminuir_volume
+  - pc_definir_volume
+  - pc_max_volume
+  - pc_mutar
+  - pc_get_vol
   - time_now
   - get_weather
 

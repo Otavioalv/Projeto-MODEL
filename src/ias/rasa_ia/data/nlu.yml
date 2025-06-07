@@ -1,6 +1,6 @@
 version: "3.1"
 nlu:
-- intent: aumentar_volume
+- intent: pc_aumentar_volume
   examples: |
     - aumenta o volume
     - aumenta o som mano
@@ -37,7 +37,7 @@ nlu:
     - manda ver no volume 
     - dá um gás no volume por favor
 
-- intent: diminuir_volume
+- intent: pc_diminuir_volume
   examples: |
     - abaixa o volume por favor
     - abaixa isso aí mano por favor
@@ -78,7 +78,7 @@ nlu:
     - põe o volume mais baixo
     - ajusta o som pra menos
 
-- intent: definir_volume 
+- intent: pc_definir_volume 
   examples: |
     - deixa o volume em [50](value) por favor
     - deixa o volume em [70](value)%
@@ -101,7 +101,7 @@ nlu:
     - fixa o volume em [75](value)
     - som em [5](value), está alto
 
-- intent: max_volume
+- intent: pc_max_volume
   examples: |
     - bota no máximo bixo
     - bota o volume no topo 
@@ -127,7 +127,7 @@ nlu:
     - põe tudo de som  
     - solta o som no máximo  
 
-- intent: get_vol
+- intent: pc_get_vol
   examples: |
     - quanto tá o volume?
     - me diz a quantidade de volume atual
@@ -150,8 +150,16 @@ nlu:
     - volume tá em quantos por cento?
     - tá em quantos % o volume?
     - qual a porcentagem do volume?
+    - me diz a porcentagem do volume
+    - qual o volume em porcentagem?
+    - me informa a porcentagem do volume
+    - quanto ta o volume agora
+    - me diz o volume atual
+    - me informa o volume atual
+    - me diz o volume configurado
+    - me informa o volume configurado
 
-- intent: mutar 
+- intent: pc_mutar 
   examples: |
     - coloca no mudo  
     - coloca o volume no mudo
@@ -213,6 +221,7 @@ nlu:
     - hora certa, por favor
     - me fala a hora aí
     - que hora marca aí?
+
     - manda as horas
     - preciso saber que horas são
     - que horas são nesse momento?
@@ -220,12 +229,47 @@ nlu:
     - me diz a hora certa
     - vê aí que horas são por favor
 
+
 - intent: get_weather
   examples: |
     - mostra o tempo em [Iranduba](city_name)
     - como está o tempo em [Manaus](city_name)?
     - me diga a previsão em [São Paulo](city_name)
     - previsão do tempo para [Iranduba](city_name)
+    - mostra o clima em [Iranduba](city_name)
+    - qual a previsão do tempo para [Manaus](city_name)?
+    - vai chover hoje em [São Paulo](city_name)?
+    - como está o clima em [Rio de Janeiro](city_name)?
+    - preciso saber se vai fazer sol em [Fortaleza](city_name)
+    - previsão do tempo em [Curitiba](city_name) por favor
+    - está chovendo em [Belo Horizonte](city_name)?
+    - me fala como está o tempo em [Brasília](city_name)
+    - clima de [Salvador](city_name) agora
+    - como está o tempo hoje em [Recife](city_name)?
+    - previsão para [Porto Alegre](city_name) hoje
+    - vai esfriar em [Natal](city_name) essa semana?
+    - me diz se está calor em [Vitória](city_name)
+    - como está a temperatura em [Goiânia](city_name)?
+    - previsão do clima para [Belém](city_name)
+    - está fazendo frio em [Florianópolis](city_name)?
+    - preciso saber o clima de [João Pessoa](city_name)
+    - vai chover amanhã em [Cuiabá](city_name)?
+    - previsão do tempo para [Campo Grande](city_name) amanhã
+    - clima atual em [São Luís](city_name)
+    - como está o tempo em [Maceió](city_name) agora?
+    - está sol em [Aracaju](city_name)?
+    - previsão para [Palmas](city_name) nos próximos dias
+    - me diga se vai chover em [Macapá](city_name)
+    - clima em [Boa Vista](city_name) por favor
+    - como está o tempo em [Porto Velho](city_name) hoje?
+    - previsão do tempo para [Nova York](city_name)
+    - clima de [Australia](city_name) agora
+    - vai chover em [São Paulo](city_name) hoje?
+    - está calor em [Manaus](city_name)?
+    - me fala a previsão para [Iranduba](city_name) amanhã    
+
+    
+
 
 - lookup: city_name
   examples: |

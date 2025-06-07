@@ -36,7 +36,9 @@ class Practical_tools:
         self.__k_tommorow_weather:str = "3Wp0bmAHHVNp7Pu6jUNr4woQAQ2nutFD"
 
     
-    def pc_def_vol(self, value:float, inc:bool = False):
+    def pc_def_vol(self, value:str, inc:bool = False):
+        
+        value = float(value)
         """ 
             Define volume do Windows
         
@@ -71,7 +73,7 @@ class Practical_tools:
         """ 
             Retorna o atributo pc_get_vol Windows
         """    
-        
+        print(f"Volume atual: {self._pc_current_vol}")
         return self._pc_current_vol
       
     def pc_get_time_now(self):  
@@ -138,6 +140,9 @@ class Practical_tools:
                 "city_name": data["name"],
             }
             
+            print(weather_response)
+            return weather_response
+            
         except RequestException as e:
             print(f"Erro {e}")
             return {}
@@ -149,8 +154,6 @@ class Practical_tools:
             
         
         # print(weather_response)
-        
-        return weather_response
             
     def api_tommorow_weather(self, city: str):
         """ 
@@ -184,6 +187,9 @@ class Practical_tools:
                     "lon": data["location"]["lon"],   
                 }
             } 
+
+            
+            return weather_response
         except RequestException as e:
             print(f"Error: {e}")
             return {}

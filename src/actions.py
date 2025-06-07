@@ -4,14 +4,14 @@ import requests
 practical_tools = Practical_tools()
 
 def nlu_fallback(_): print("Comando irreconhecivel ou não exista")
-def aumentar_vol(value): practical_tools.pc_def_vol(value if value != None else 0.05, inc= not value)
-def diminuir_vol(value): practical_tools.pc_def_vol(value if value != None else -0.05, inc= not value)
+def aumentar_vol(value): practical_tools.pc_def_vol(value if value != None else "0.05", inc= not value)
+def diminuir_vol(value): practical_tools.pc_def_vol(value if value != None else "-0.05", inc= not value)
 def definir_vol(value): practical_tools.pc_def_vol(value)
-def max_vol(_): practical_tools.pc_def_vol(100)
-def mutar_vol(_): practical_tools.pc_def_vol(0)
+def max_vol(_): practical_tools.pc_def_vol("100")
+def mutar_vol(_): practical_tools.pc_def_vol("0")
 def get_vol(_): practical_tools.pc_get_vol()
 def get_time_now(_): practical_tools.pc_get_time_now()
-def get_weather(city): practical_tools.api_open_weather(city)
+def get_weather(city): practical_tools.api_open_weather(city or "Iranduba")
 
 
 
@@ -24,7 +24,8 @@ actions = {
     "pc_mutar": mutar_vol,
     "pc_get_vol": get_vol,
     "time_now": get_time_now,
-    "api_get_weather": get_weather
+    # "api_get_weather": get_weather
+    "get_weather": get_weather,
 }
 
 
@@ -56,11 +57,12 @@ def start():
         print("Valor: ", value) # nome entities
         
         # handler = actions[action]
+        handler = actions.get(action, nlu_fallback) # se não existir ação, chama nlu_fallback
         
-        # if handler: 
-        #     handler(value)
-        # else:
-        #     print("Ação não reconhecida")
+        if handler: 
+            handler(value)
+        else:
+            print("Ação não reconhecida")
 
 start()
 
