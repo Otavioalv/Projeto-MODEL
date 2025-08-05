@@ -1,0 +1,81 @@
+version: "3.1"
+
+intents:
+  - pc_aumentar_volume
+  - pc_diminuir_volume
+  - pc_definir_volume
+  - pc_max_volume
+  - pc_mutar
+  - pc_get_vol
+  - time_now
+  - get_weather
+
+entities:
+  - value
+  - city_name
+
+responses:
+  utter_aumentar_volume:
+    - custom:
+        action: "pc_aumentar_volume"
+        value: "{value}"
+
+  utter_diminuir_volume:
+    - custom:
+        action: "pc_diminuir_volume"
+        value: "{value}"
+
+  utter_definir_volume:
+    - custom:
+        action: "pc_definir_volume"
+        value: "{value}"  # Opcional, pode sobrescrever via ação
+  
+  utter_max_volume:
+    - custom:
+        action: "pc_max_volume"
+
+  utter_mutar:
+    - custom:
+        action: "pc_mutar"
+  
+  utter_get_vol:
+    - custom:
+        action: "pc_get_vol"
+  
+  utter_time_now:
+    - custom:
+        action: "time_now"
+
+  utter_get_weather:
+    - custom:
+        action: "api_get_weather"
+        value: "{city_name}"
+
+
+actions:
+  - utter_aumentar_volume
+  - utter_diminuir_volume
+  - utter_definir_volume
+  - utter_max_volume
+  - utter_mutar
+  - utter_get_vol
+  - utter_time_now
+  - utter_get_weather
+
+slots:
+  value:
+    type: any
+    mappings:
+      - type: from_entity
+        entity: value
+  city_name: 
+    type: text
+    mappings: 
+      - type: from_entity
+        entity: city_name
+
+
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

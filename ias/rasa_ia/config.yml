@@ -1,0 +1,52 @@
+recipe: default.v1
+assistant_id: 20250524-135501-jet-harbor
+language: pt
+
+pipeline:
+  - name: SpacyNLP
+    model: pt_core_news_md
+
+  - name: SpacyTokenizer
+
+  - name: RegexFeaturizer
+
+  - name: RegexEntityExtractor
+    case_sensitive: false
+    use_lookup_tables: true
+    use_regexes: true
+
+  - name: LexicalSyntacticFeaturizer
+
+  - name: CountVectorsFeaturizer
+    analyzer: char_wb
+    min_ngram: 3
+    max_ngram: 5
+
+  - name: CountVectorsFeaturizer
+    analyzer: word
+    min_ngram: 1
+    max_ngram: 2
+
+  - name: SpacyFeaturizer
+
+  - name: DIETClassifier
+    constrain_similarities: true
+    epochs: 100  # Aumente para 150–200 se tiver poucos dados
+    use_lookup_tables: true
+    use_regexes: true
+
+  - name: EntitySynonymMapper
+
+  - name: ResponseSelector
+    epochs: 100
+
+  - name: FallbackClassifier
+    threshold: 0.6
+    ambiguity_threshold: 0.2
+
+policies:
+  - name: RulePolicy
+  - name: MemoizationPolicy
+  - name: TEDPolicy
+    max_history: 5  # Aumente se houver fluxos mais longos
+    epochs: 100
